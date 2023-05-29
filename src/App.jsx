@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useMutation, useQuery } from "../convex/_generated/react";
+import { useAction, useMutation, useQuery } from "../convex/_generated/react";
 
 export default function App() {
   const messages = useQuery("listMessages") || [];
 
   const [newMessageText, setNewMessageText] = useState("");
   const sendMessage = useMutation("sendMessage");
+  const sendMeatLorumIpsum = useAction("sendMessage:sendMeatLorumIpsum");
 
   const [name] = useState(() => "User " + Math.floor(Math.random() * 10000));
   async function handleSendMessage(event) {
@@ -20,7 +21,7 @@ export default function App() {
         <span>{name}</span>
       </p>
       <ul>
-        {messages.map(message => (
+        {messages.map((message) => (
           <li key={message._id.toString()}>
             <span>{message.author}:</span>
             <span>{message.body}</span>
@@ -31,11 +32,12 @@ export default function App() {
       <form onSubmit={handleSendMessage}>
         <input
           value={newMessageText}
-          onChange={event => setNewMessageText(event.target.value)}
+          onChange={(event) => setNewMessageText(event.target.value)}
           placeholder="Write a message…"
         />
         <input type="submit" value="Send" disabled={!newMessageText} />
       </form>
+      <button onClick={() => sendMeatLorumIpsum()}>meat message</button>
     </main>
   );
 }
